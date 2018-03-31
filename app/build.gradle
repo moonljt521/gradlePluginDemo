@@ -1,6 +1,9 @@
+import com.moon.gradle.PrintTaskExecuteTimeListener
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'moongradleplugin'
+
 
 android {
     compileSdkVersion 26
@@ -39,3 +42,38 @@ buildscript {
         classpath "com.moon.gradle:pulgin1:${TASK_TIME_VERSION}"
     }
 }
+
+
+
+
+
+task MoonTask {
+     println "MoonTask ....."
+}
+
+
+MoonTask.doLast {
+    println "MoonTask.. doLast..."
+}
+
+MoonTask.doFirst {
+    println "MoonTask.. doFirst..."
+}
+
+project.beforeEvaluate {
+
+    println "beforeEvaluate....."
+
+}
+
+
+project.afterEvaluate {
+
+    println "afterEvaluate....."
+
+}
+
+
+//tasks.findByName('assembleDebug').doLast{
+//    println "1112121mmmm"
+//}
