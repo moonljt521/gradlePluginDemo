@@ -3,10 +3,15 @@
 ## 1 提高虚拟机内存
 
 在项目根目录的 gradle.properties 文件添加配置
+
 org.gradle.daemon=true 
+
 org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 
+
 org.gradle.parallel=true 
+
 org.gradle.configureondemand=true 
+
 
 ## 2 构建是通过gradle来进行的，可以打印gradle内部的task来查看哪些task比较耗时，此功能写在了demo内，可自行查阅
 
