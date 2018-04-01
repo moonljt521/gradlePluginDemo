@@ -17,9 +17,11 @@ org.gradle.configureondemand=true
 
 ## 3 常规来说比较耗时的任务有lint 和 aapt 检查，为了加速构建，可以在debu时屏蔽这些检查
 
->
+
 在app 的build.gradle 文件上添加配置
 注： 在android { } 内
+
+```
  gradle.startParameter.getTaskNames().each { task ->
         //library里 BuildConfig.DEBUG默认一直是flase;所以需要自定义
         if(task.equals("assembleDebug")){
@@ -32,6 +34,7 @@ org.gradle.configureondemand=true
             aaptOptions.cruncherEnabled = true
         }
     }
+```
 
 ## 4另外一些测试性质的task可以直接忽略掉，在根目录的build.gradle 内配置
 
