@@ -7,11 +7,9 @@ import org.gradle.api.execution.TaskExecutionListener
 import org.gradle.api.initialization.Settings
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.tasks.TaskState
-import org.gradle.util.Clock
 
 class PrintTaskExecuteTimeListener implements TaskExecutionListener, BuildListener {
 
-    Clock clock;
 
     private times = []
 
@@ -19,9 +17,7 @@ class PrintTaskExecuteTimeListener implements TaskExecutionListener, BuildListen
 
     @Override
     void beforeExecute(Task task) {
-        clock = new Clock(new Date().getTime())
-//        clock = new Clock()
-        startTime = clock.getStartTime()
+        startTime = System.currentTimeMillis()
     }
 
     @Override
