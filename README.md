@@ -38,6 +38,7 @@ org.gradle.configureondemand=true
 
 ## 4另外一些测试性质的task可以直接忽略掉，在根目录的build.gradle 内配置
 
+```
 gradle.taskGraph.whenReady {
     tasks.each { task ->
         if (task.name.contains("Test")) {
@@ -45,6 +46,7 @@ gradle.taskGraph.whenReady {
         }
     }
 }
+```
 
 以上配置后可以在debug的时候至少减少一半时间
 
