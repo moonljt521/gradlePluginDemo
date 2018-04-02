@@ -1,6 +1,10 @@
+//import org.gradle.internal.time
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'moongradleplugin'
+
+apply plugin: MyLocalPlugin
 
 android {
     compileSdkVersion 26
@@ -40,3 +44,37 @@ buildscript {
         classpath "com.moon.gradle:pulgin1:${TASK_TIME_VERSION}"
     }
 }
+
+//test 一个 本地的插件
+class MyLocalPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+
+        project.task ('MoonLocalPrintPlugin')<< {
+
+            org.gradle.internal.time.Clock  clock = new org.gradle.internal.time.Clock();
+
+            long start = clock.startTime;
+
+            println start
+
+            println "my task local plugin begin....."
+//
+//            for (int i = 0 ;i < 1000;i++){
+//                println "i = " + i
+//            }
+
+            long during = clock.getElapsedMillis()
+
+            println during
+        }
+
+
+
+    }
+}
+
+
+
+

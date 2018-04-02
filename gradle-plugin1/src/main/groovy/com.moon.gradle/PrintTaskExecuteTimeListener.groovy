@@ -13,9 +13,6 @@ public class PrintTaskExecuteTimeListener implements TaskExecutionListener, Buil
     private Clock clock
     private times = []
 
-
-
-
     @Override
     void beforeExecute(Task task) {
         clock = new Clock()
