@@ -9,18 +9,23 @@ import org.gradle.api.invocation.Gradle
 import org.gradle.api.tasks.TaskState
 import org.gradle.util.Clock
 
-public class PrintTaskExecuteTimeListener implements TaskExecutionListener, BuildListener {
-    private Clock clock
+class PrintTaskExecuteTimeListener implements TaskExecutionListener, BuildListener {
+
+
     private times = []
+
+    long startTime;
 
     @Override
     void beforeExecute(Task task) {
-        clock = new Clock()
+        clock = new Clock(new Date().getTime())
+//        clock = new Clock()
+        startTime = clock.getStartTime()
     }
 
     @Override
     void afterExecute(Task task, TaskState taskState) {
-        def ms = clock.timeInMs
+        def ms = System.currentTimeMillis() - startTime
         times.add([ms, task.path])
         task.project.logger.warn "${task.path} spend ${ms}ms"
     }

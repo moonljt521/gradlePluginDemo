@@ -14,7 +14,6 @@ repositories {
     mavenCentral()
 }
 
-
 uploadArchives {
     repositories {
         mavenDeployer {
