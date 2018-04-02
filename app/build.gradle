@@ -30,6 +30,7 @@ android {
 
             aaptOptions.cruncherEnabled = false
 
+            project.gradle.startParameter.excludedTaskNames.add('lint')
 
         }else if(task.equals("assembleRelease")){
             println "<<<<<<<<"+task

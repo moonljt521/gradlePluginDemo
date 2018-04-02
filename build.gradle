@@ -39,4 +39,4 @@ gradle.taskGraph.whenReady {
     }
 }
 
-project.gradle.startParameter.excludedTaskNames.add('lint')
+
