@@ -1,7 +1,11 @@
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'moongradleplugin'
 
+apply plugin : 'gradleplugin_eventtracking'
+
+//apply plugin: 'com.llew.bytecode.fix'
 
 android {
     compileSdkVersion 26
@@ -21,7 +25,6 @@ android {
         }
     }
 
-
     gradle.startParameter.getTaskNames().each { task ->
         //library里 BuildConfig.DEBUG默认一直是flase;所以需要自定义
         if(task.equals("assembleDebug")){
@@ -36,8 +39,6 @@ android {
             println "<<<<<<<<"+task
 
             aaptOptions.cruncherEnabled = true
-
-
         }
     }
 
@@ -50,18 +51,26 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    //
+
 }
 
-buildscript {
-    repositories {
-        maven {
-            url uri("${MAVEN_REPO_RELEASE_GRADLE_PLUGIN_URL}")
-        }
-    }
-    dependencies {
-        classpath "com.moon.gradle:pulgin1:${TASK_TIME_VERSION}"
+gradle.startParameter.getTaskNames().each { task ->
+    //library里 BuildConfig.DEBUG默认一直是flase;所以需要自定义
+
+    println "当前执行的 task --> " + task
+
+    if(task.equals("assembleDebug")){
+        aaptOptions.cruncherEnabled = false
+        project.gradle.startParameter.excludedTaskNames.add('lint');
+
+    }else if(task.equals("assembleRelease")){
+        aaptOptions.cruncherEnabled = true
     }
 }
+
+
 
 
 task aCopyFile (){
@@ -83,3 +92,22 @@ task aDelTask(){
 //    }
 
 }
+
+
+//bytecodeFixConfig {
+//
+//    enable true
+//
+//    logEnable = true
+//
+//    keepFixedJarFile = true
+//
+//    keepFixedClassFile = true
+//
+//    dependencies = []
+//
+//    fixConfig = [
+//            'com.tencent.av.sdk.NetworkHelp##getAPInfo(android.content.Context)##$1 = null;System.out.println("I have hooked this method by BytecodeFixer !!!");##0',
+//            'com.tencent.av.sdk.NetworkHelp##getMobileAPInfo(android.content.Context,int)##$1 = null;System.out.println("I have hooked this method by BytecodeFixer !!!");return new com.tencent.av.sdk.NetworkHelp.APInfo();##-1',
+//    ]
+//}

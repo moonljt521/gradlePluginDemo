@@ -1,1 +1,1 @@
-include ':app', ':gradle-plugin1'
+include ':app', ':gradlePlugin-taskExecuteTime', ':gradleplugin-eventtracking'

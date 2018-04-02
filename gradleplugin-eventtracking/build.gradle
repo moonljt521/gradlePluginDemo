@@ -1,0 +1,43 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile 'org.javassist:javassist:3.20.0-GA'
+    compile 'com.android.tools.build:transform-api:1.5.0'
+    compile 'com.android.tools.build:gradle:2.3.3'
+}
+
+repositories {
+    jcenter()
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri("../rep"))
+
+            pom.groupId = GROUP_ID
+            pom.artifactId = "EventTrackingPlugin"
+            pom.version = EVENT_TRACKING_VERSION
+        }
+    }
+}
+
+/*** 为了测试方便将下边的nexus maven配置暂时注释掉，使用上边本地的maven */
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri("${MAVEN_REPO_RELEASE_GRADLE_PLUGIN_URL}")){
+//                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+//            }
+//
+//            pom.groupId = GROUP_ID
+//            pom.artifactId = "EventTrackingPlugin"
+//            pom.version = EVENT_TRACKING_VERSION
+//        }
+//    }
+//}
+
+
