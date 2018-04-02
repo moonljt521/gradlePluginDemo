@@ -3,7 +3,8 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'moongradleplugin'
 
-apply plugin: MyLocalPlugin
+//apply plugin : 'gradleplugin_eventtracking'
+
 
 android {
     compileSdkVersion 26
@@ -30,6 +31,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    //
+
 }
 
 buildscript {
@@ -40,39 +44,23 @@ buildscript {
     }
     dependencies {
         classpath "com.moon.gradle:pulgin1:${TASK_TIME_VERSION}"
+//        classpath "com.moon.gradle:EventTrackingPlugin:${EVENT_TRACKING_VERSION}"
     }
 }
 
-//test 一个 本地的插件
-class MyLocalPlugin implements Plugin<Project> {
+gradle.startParameter.getTaskNames().each { task ->
+    //library里 BuildConfig.DEBUG默认一直是flase;所以需要自定义
 
-    @Override
-    void apply(Project project) {
+    println "当前执行的 task --> " + task
 
-        project.task ('MoonLocalPrintPlugin')<< {
+    if(task.equals("assembleDebug")){
+        aaptOptions.cruncherEnabled = false
+        project.gradle.startParameter.excludedTaskNames.add('lint');
 
-            org.gradle.internal.time.Clock  clock = new org.gradle.internal.time.Clock();
-
-            long start = clock.startTime;
-
-            println start
-
-            println "my task local plugin begin....."
-//
-//            for (int i = 0 ;i < 1000;i++){
-//                println "i = " + i
-//            }
-
-            long during = clock.getElapsedMillis()
-
-            println during
-        }
-
-
-
+    }else if(task.equals("assembleRelease")){
+        aaptOptions.cruncherEnabled = true
     }
 }
-
 
 
 

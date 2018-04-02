@@ -1,0 +1,33 @@
+import com.android.tools.lint.detector.api.Implementation
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile gradleApi()
+    compile localGroovy()
+//    compile 'org.javassist:javassist:3.20.0-GA'
+    compile 'com.android.tools.build:transform-api:1.5.0'
+    compile 'com.android.tools.build:gradle:3.0.1'
+}
+
+repositories {
+    jcenter()
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri("${MAVEN_REPO_RELEASE_GRADLE_PLUGIN_URL}")){
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }
+
+            pom.groupId = GROUP_ID
+            pom.artifactId = "EventTrackingPlugin"
+            pom.version = EVENT_TRACKING_VERSION
+        }
+    }
+}
+
+
